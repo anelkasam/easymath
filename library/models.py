@@ -2,38 +2,60 @@ from django.db import models
 
 
 class Grade(models.Model):
-    title = models.IntegerField()
+    """
+    School grade for the topic
+    """
+    title = models.IntegerField(verbose_name='Класс')
 
 
 class Subject(models.Model):
-    title = models.CharField(max_length=30)
+    """
+    Allowable subjects. This table contains only two subjects: Algebra and Geometry
+    """
+    title = models.CharField(max_length=30, verbose_name='Предмет')
 
 
 class Package(models.Model):
-    title = models.CharField(max_length=50)
+    """
+    Study packages allowable on this service
+    """
+    title = models.CharField(max_length=50, verbose_name='Направление подготовки')
 
 
 class Topic(models.Model):
-    title = models.CharField(max_length=50)
+    """
+    Topic of subject
+    """
+    title = models.CharField(max_length=50, verbose_name='Тема')
     subject = models.ForeignKey(Subject, on_delete=models.PROTECT)
     grade = models.ForeignKey(Grade, null=True, on_delete=models.SET_NULL)
 
 
 def article_file_path(instance, filename):
+    """
+    Returns the path where we should save our files
+    """
     return f'library/articles/{instance.topic.subject}/{instance.topic.grade}/{filename}'
 
 
 class Article(models.Model):
-    title = models.CharField(max_length=100)
+    """
+    Some article
+    """
+    title = models.CharField(max_length=100, verbose_name='Название статьи')
     topic = models.ForeignKey(Topic, on_delete=models.PROTECT)
     file = models.FileField(upload_to=article_file_path)
 
 
-def article_file_path(instance, filename):
-    return f'library/assignememts/{instance.topic.subject}/{instance.topic.grade}/{filename}'
+def assignment_file_path(instance, filename):
+    """
+    Returns the path to folder with assignments and solutions
+    """
+    return f'library/assignments/{instance.topic.subject}/{instance.topic.grade}/{filename}'
 
 
 class Assignment(models.Model):
+    """ Assignments """
     COMPLEXITY = (
         (0, 'Elementary'),
         (1, 'Easy'),
@@ -41,9 +63,9 @@ class Assignment(models.Model):
         (3, 'Challenge')
     )
 
-    text = models.TextField()
-    answer_choices = models.TextField()
-    short_answer = models.IntegerField()
-    detail_answer = models.FileField(upload_to='')
+    text = models.TextField(verbose_name='Текст задачи')
+    answer_choices = models.TextField(verbose_name='Варианты ответов')
+    short_answer = models.IntegerField(verbose_name='Краткий ответ')
+    detail_answer = models.FileField(upload_to=assignment_file_path, verbose_name='Детальное решение')
     topic = models.ForeignKey(Topic, on_delete=models.PROTECT)
-    complexity = models.IntegerField(choices=COMPLEXITY, default=2)
+    complexity = models.IntegerField(choices=COMPLEXITY, default=2, verbose_name='Уровень сложности')

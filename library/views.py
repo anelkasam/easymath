@@ -1,6 +1,8 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+
+from .models import Article
 
 
-def index(request):
-    return HttpResponse('Hello, Elena! You are in library!')
+def library_context(request):
+    context = {}
+    return render(request, 'library_context.tpl', context)
