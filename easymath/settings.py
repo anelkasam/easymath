@@ -128,3 +128,8 @@ STATICFILES_DIRS = (
 )
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+try:
+    from easymath.local_settings import *
+except ImportError:
+    pass
