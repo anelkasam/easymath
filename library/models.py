@@ -37,6 +37,7 @@ class Definition(models.Model):
     """
     name = models.CharField(primary_key=True, max_length=50, verbose_name='Название')
     text = models.TextField(verbose_name='Определение')
+    image = models.ImageField(verbose_name='', blank=True, null=True)
 
     class Meta:
         ordering = ['name']
