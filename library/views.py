@@ -1,6 +1,18 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+
+from .models import Article
 
 
-def index(request):
-    return HttpResponse('Hello, Elena! You are in library!')
+def library_context(request):
+    """
+    ToDo: Decide what we should show on the main library page.
+    Maybe it will be the content of articles in order to public date.
+    """
+    context = {}
+    return render(request, 'library_context.tpl', context)
+
+
+def definitions(request):
+    """
+    Return all definitions in alphabetical order
+    """
