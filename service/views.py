@@ -7,5 +7,5 @@ from service.models import About
 def index(request):
     context = {'name': 'Elena',
                'about': About.objects.all()}
-    return render(request, 'index.tpl', context)
+    return render(request, 'index.html', context)
 

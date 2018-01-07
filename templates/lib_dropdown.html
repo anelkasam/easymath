@@ -1,0 +1,21 @@
+<div class="dropdown-menu dropdown-menu-right columns-2" aria-labelledby="navbarLibrary">
+<div class="row">
+    <div class="col-sm-6">
+    <a href="{% url 'definitions' %}">
+    <p class="dropdown-item" style="text-decoration: underline; padding: 0% 0% 0% 10%">
+        Означення
+    </p></a>
+    <p style="text-decoration: underline; padding: 0% 0% 0% 10%">Предмети</p>
+    {% for sub in subjects %}
+        <a class="dropdown-item" href="{% url 'subject' sub.pk %}">{{ sub }}</a>
+    {% endfor %}
+    </div>
+
+    <div class="col-sm-6">
+    <p style="text-decoration: underline; padding: 0% 0% 0% 10%">Класи</p>
+    {% for grade in grades %}
+        <a class="dropdown-item" href="{% url 'grade' grade.pk %}">{{ grade }}</a>
+    {% endfor %}
+    </div>
+</div>
+</div>

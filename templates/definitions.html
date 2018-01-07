@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <!-- Page Content -->
+    <div class="container">
+
+        <!-- Page Heading/Breadcrumbs -->
+        <h1 class="mt-4 mb-3">Означення:
+        </h1>
+
+        <div class="mb-4" id="accordion" role="tablist" aria-multiselectable="true">
+            {% for definition in definitions %}
+                <div class="card">
+                    <div class="card-header" role="tab" id="heading{{ definition.name }}">
+                        <h5 class="mb-0">
+                            <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapse{{ definition.name }}"
+                               aria-expanded="false" aria-controls="collapseTwo">{{ definition.name }}
+                            </a>
+                        </h5>
+                    </div>
+                    <div id="collapse{{ definition.name }}" class="collapse" role="tabpanel" aria-labelledby="heading{{ definition.name }}">
+                        <div class="card-body">{{ definition.text|safe }}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+    </div>
+    <!-- /.container -->
+{% endblock %}

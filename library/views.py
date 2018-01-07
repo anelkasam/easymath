@@ -1,18 +1,35 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 
-from .models import Article
-
-
-def library_context(request):
-    """
-    ToDo: Decide what we should show on the main library page.
-    Maybe it will be the content of articles in order to public date.
-    """
-    context = {}
-    return render(request, 'library_context.tpl', context)
+from .models import Article, Definition, Grade, Topic, Subject
 
 
 def definitions(request):
     """
     Return all definitions in alphabetical order
     """
+    context = {
+        'definitions': Definition.objects.order_by('name')
+    }
+    return render(request, 'definitions.html', context)
+
+
+def subject(request, pk):
+    """
+    Return all topics and articles
+    """
+    subject = get_object_or_404(Subject, pk=pk)
+    context = {
+        'topics': Topic.objects.filter(subject=subject).order_by('title')
+    }
+    return render(request, 'topics.html', context)
+
+
+def grade(request, pk):
+    """
+    Return all topics and articles
+    """
+    subject = get_object_or_404(Grade, pk=pk)
+    context = {
+        'topics': Topic.objects.filter(grade=grade).order_by('title')
+    }
+    return render(request, 'topics.html', context)
